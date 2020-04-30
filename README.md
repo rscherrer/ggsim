@@ -26,6 +26,7 @@ Let us load the packages we need:
 
 
 ```r
+#devtools::install_github("rscherrer/ggsim") # if the package is not already installed
 library(tidyverse)
 library(ggsim)
 library(cowplot) # to assemble multiple plots in the same figure
