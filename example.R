@@ -40,11 +40,6 @@ data %>%
   group_by(mutation, scaleI) %>%
   group_map(function(df, ...) {
 
-    filename <- "figures/trajectories_mutation_%s_scaleI_%s.png" %>%
-      sprintf(df$mutation[1], df$scaleI[1])
-
-    print(filename)
-
     list(variables, colors, ylabs) %>%
       pmap(function(variable, color, label) {
 
