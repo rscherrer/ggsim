@@ -15,5 +15,6 @@ Imports:
    ggplot2,
    stringr,
    purrr,
-   dplyr
+   dplyr,
+   stringr
 
