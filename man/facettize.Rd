@@ -21,11 +21,11 @@ facettize(
 
 \item{facet_cols}{Optional variables to facet by columns}
 
-\item{facet_wrapped}{If TRUE, `facet_wrap` is used instead of `facet_grid`, so columns and rows are irrelevant}
+\item{facet_wrapped}{If TRUE, \code{facet_wrap} is used instead of \code{facet_grid}, so columns and rows are irrelevant}
 
 \item{prepend, append}{Optional list of strings to prepend or append to the facet labels. The list should be named after the factors to prepend to.}
 
-\item{labelling}{Optional list of functions to pass to `labeller` (e.g. `facet_value`, `label_both` or `label_parsed`).}
+\item{labelling}{Optional list of functions to pass to \code{labeller} (e.g. \code{facet_value}, \code{label_both} or \code{label_parsed}).}
 }
 \value{
 A facetted ggplot

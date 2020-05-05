@@ -48,16 +48,24 @@ ggdensityplot <- function(
 
   p <- p + xlab(variable)
 
-  # Two dimensional plot with multiple layers
+  # One dimensional plot with multiple layers
   if (plot_type %in% c("density", "histogram")) {
-    if (is.null(colors)) colors <- "darkgrey"
     layers <- data %>% split(f = data[, grouping])
-    layers <- map2(layers, colors, ~ this_geom(data = .x, aes(x = get(variable)), alpha = alpha, bins = bins, fill = .y))
+    layers <- map(
+      layers, ~ this_geom(
+        data = .x,
+        aes(x = get(variable), fill = .data[[grouping]][1]),
+        alpha = alpha, bins = bins
+      )
+    )
     for (i in seq_along(layers)) p <- p + layers[i]
+    if (is.null(colors)) colors <- rep("darkgrey", length(layers))
+    p <- p + scale_fill_manual(values = colors)
+    p <- p + labs(fill = grouping)
     return (p)
   }
 
-  # Two dimensional plot with a single layer
+  # Two dimensional plot
   p <- p + this_geom(aes(x = get(grouping), y = get(variable))) + xlab(grouping) + ylab(variable)
   if (jitter) p <- p + geom_jitter(aes(x = get(grouping), y = get(variable)), width = jitter_width)
   if (!color_groups) return (p)

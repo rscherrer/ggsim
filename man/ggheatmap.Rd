@@ -13,9 +13,9 @@ ggheatmap(data, variable, x, y, reduce = NULL, how = last, keep = NULL)
 
 \item{x, y}{What variables for the x- and y-axes?}
 
-\item{reduce}{Optional list of extra shrinking steps to perform prior to summarizing the data over all tiles (as defined by combining facets, `x` and `y`). See `?shrink`.}
+\item{reduce}{Optional list of extra shrinking steps to perform prior to summarizing the data over all tiles (as defined by combining facets, \code{x} and \code{y}). See \code{?shrink}.}
 
-\item{how}{Function used to summarize the data within each tile. Defaults to `last`. Irrelevant if the data already has one value for each tile. If `reduce` is specified, this argument must be provided explicitly as a list with one summary function for each grouping level in `reduce` and a final summary function for each tile. See `?shrink`.}
+\item{how}{Function used to summarize the data within each tile. Defaults to \code{last}. Irrelevant if the data already has one value for each tile. If \code{reduce} is specified, this argument must be provided explicitly as a list with one summary function for each grouping level in \code{reduce} and a final summary function for each tile. See \code{?shrink}.}
 
 \item{keep}{Optional extra grouping variables to keep e.g. for facetting}
 }

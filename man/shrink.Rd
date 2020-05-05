@@ -13,11 +13,11 @@ shrink(data, variables, grouping, how = last)
 
 \item{grouping}{A list of single, or vectors of, grouping variables to be used sequentially. The groups are summarized in the order they are provided.}
 
-\item{how}{A list of summarizing functions to be used, respectively, on each of the grouped data frames defined in `groups`}
+\item{how}{A list of summarizing functions to be used, respectively, on each of the grouped data frames defined in \code{groups}}
 }
 \value{
 A shrunk data frame
 }
 \description{
-Sequentially applies `group_by` and `summarize` to a data frame.
+Sequentially applies \code{group_by} and \code{summarize} to a data frame.
 }

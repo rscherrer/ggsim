@@ -1,7 +1,7 @@
 ---
 title: "ggsim: Simulation plotting tools using ggplot2"
 author: "Rapha&euml;l Scherrer"
-date: "2020-04-30"
+date: "2020-05-05"
 output:
   html_document:
     keep_md: yes
