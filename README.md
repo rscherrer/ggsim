@@ -111,3 +111,7 @@ p1 %>% facettize(
 ![](vignette_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 The plots returned by these functions are all `ggplot` objects, so they can be further customized as much as you want.
+
+# Note
+
+Please note that this package is not about combining different `ggplot` objects together. Multiple packages exist that do this. Here, we used the `plot_grid` function from `cowplot`, but other are available, including `egg`, `ggpubr` or `grid`. These may be worth looking into for making sure e.g. that plotting frames are correctly aligned across figures (not like in this vignette). Check out a worked out example at https://cran.r-project.org/web/packages/egg/vignettes/Overview.html.
