@@ -50,6 +50,8 @@ ggdensityplot <- function(
 
   # One dimensional plot with multiple layers
   if (plot_type %in% c("density", "histogram")) {
+    grps <- levels(data[, grouping])
+    if (is.null(colors)) colors <- rep("darkgrey", length(groups))
     layers <- data %>% split(f = data[, grouping])
     layers <- map(
       layers, ~ this_geom(
@@ -59,8 +61,7 @@ ggdensityplot <- function(
       )
     )
     for (i in seq_along(layers)) p <- p + layers[i]
-    if (is.null(colors)) colors <- rep("darkgrey", length(layers))
-    p <- p + scale_fill_manual(values = colors)
+    p <- p + scale_fill_manual(values = colors, limits = grps)
     p <- p + labs(fill = grouping)
     return (p)
   }
