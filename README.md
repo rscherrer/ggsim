@@ -1,5 +1,7 @@
 # ggsim: Plotting tools for simulations using ggplot2
 
+Note: all contributions and suggestions to `ggsim` are welcome!
+
 This package provides wrappers around `ggplot2` to make plotting of typical simulation databases easier. Let us first load a simulation dataset. The dataset consists of multiple variables (`EI`, `RI` and `SI`) that were tracked through time across multiple replicate simulations and multiple combinations of parameters (`hsymmetry`, `ecosel`, `dispersal`, `mutation`, `scaleA`, `scaleI`). 
 
 
