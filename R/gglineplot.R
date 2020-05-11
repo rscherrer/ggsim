@@ -23,27 +23,25 @@ gglineplot <- function(
   color = NULL
 ) {
 
-  library(tidyverse)
-
   alphamin <- ifelse(alpha - step < 0, 0, alpha - step)
   alphamax <- ifelse(alpha + step > 1, 1, alpha + step)
 
   if (is.null(line)) {
-    data <- data %>% mutate(linecol = 1)
+    data <- data %>% dplyr::mutate(linecol = 1)
     line <- "linecol"
   }
 
-  data <- data %>% mutate_at(line, as.factor)
+  data <- data %>% dplyr::mutate_at(line, as.factor)
   nlines <- nlevels(data[[line]])
 
   if (is.null(color)) args <- list() else args <- list(color = color)
 
-  p <- ggplot(data, aes(x = get(x), y = get(y), alpha = get(line))) +
+  p <- ggplot2::ggplot(data, aes(x = get(x), y = get(y), alpha = get(line))) +
     do.call("geom_line", args) +
-    theme_bw() +
-    labs(x = x, y = y) +
-    guides(alpha = FALSE) +
-    scale_alpha_manual(values = runif(n = nlines, min = alphamin, max = alphamax))
+    ggplot2::theme_bw() +
+    ggplot2::labs(x = x, y = y) +
+    ggplot2::guides(alpha = FALSE) +
+    ggplot2::scale_alpha_manual(values = runif(n = nlines, min = alphamin, max = alphamax))
 
   return (p)
 

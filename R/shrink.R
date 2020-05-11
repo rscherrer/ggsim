@@ -9,20 +9,18 @@
 #'
 #' @return A shrunk data frame
 #'
-#' @example shrink(data, variables, grouping = list("simulations", c("hsymmetry", "ecosel")), how = c(last, mean))
-#'
 #' @export
 
 shrink <- function(data, variables, grouping, how = last) {
 
-  library(tidyverse)
-
-  if (length(grouping) != length(how)) stop("grouping and how must have the same length")
+  if (length(grouping) != length(how)) stop("`grouping` and `how`` must have the same length")
   if (length(how) == 1) how <- list(how)
   if (!is.list(grouping) & length(grouping) == 1) grouping <- list(grouping)
 
   for (i in seq_along(grouping)) {
-    data <- data %>% group_by_at(do.call("c", grouping)) %>% summarize_at(variables, how[i])
+    data <- data %>%
+      dplyr::group_by_at(do.call("c", grouping)) %>%
+      dplyr::summarize_at(variables, how[i])
     grouping <- grouping[-1]
   }
 

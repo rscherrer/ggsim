@@ -1,14 +1,14 @@
 #' Check input
 #'
-#' This function checks the validity of an argument passed to `ggfacet_make` and reformats it if needed for the function to be able to use.
+#' Checks and if needed reformats some input arguments to the `facettize` function.
 #'
 #' @param arg The argument
 #' @param facets A character vector of facetting variable names
 #' @param default The default value to assign a facet
 #'
-#' @export
+#' @return A character vector
 
-ggfacet_check <- function(arg, facets, default = "") {
+facettize_check <- function(arg, facets, default = "") {
 
   # If the argument is absent, return a vector of default characters
   if (is.null(arg)) return (rep(default, length(facets)))
@@ -19,8 +19,12 @@ ggfacet_check <- function(arg, facets, default = "") {
     # Recycle it if there is only one
     if (length(arg) == 1) return (rep(arg, length(facets)))
 
-    # Otherwise there should be one value per facet
-    if (length(arg) != length(facets)) stop("Please provide as many values as facets")
+    # Error if there are not as many values as there are facets
+    if (length(arg) != length(facets)) {
+      stop("If unnamed and if not scalar, the argument must be as long as facets")
+    }
+
+    # Otherwise the argument does not need formatting
     return (arg)
 
   }

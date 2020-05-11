@@ -2,17 +2,20 @@
 % Please edit documentation in R/str_prepend.R
 \name{str_prepend}
 \alias{str_prepend}
-\title{Prepend a string to another}
+\title{Append a string to another}
 \usage{
 str_prepend(x, string, sep = "")
 }
 \arguments{
-\item{x}{A string}
+\item{x}{A character vector}
 
-\item{string}{A string to prepend}
+\item{string}{A character string to prepend}
 
 \item{sep}{Optional separator string}
 }
+\value{
+A character vector
+}
 \description{
-Prepend a string to another
+Append a string to another
 }

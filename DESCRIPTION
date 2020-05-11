@@ -11,12 +11,12 @@ LazyData: true
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 Imports:
-   tidyr,
-   ggplot2,
-   stringr,
-   purrr,
-   dplyr,
-   stringr
+    tidyr,
+    ggplot2,
+    stringr,
+    purrr,
+    dplyr,
+    magrittr
 Suggests: 
     knitr,
     rmarkdown

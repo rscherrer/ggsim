@@ -11,8 +11,6 @@
 #'
 #' @return A ggplot
 #'
-#' @example ggheatmap(data, "EI", "hsymmetry", "ecosel", reduce = "simulation", how = c(last, mean))
-#'
 #' @export
 
 ggheatmap <- function(
@@ -25,16 +23,16 @@ ggheatmap <- function(
   keep = NULL
 ) {
 
-  library(tidyverse)
-
   grouping <- c(reduce, list(unlist(c(x, y, keep))))
 
-  data <- data %>% shrink(variable, grouping, how) %>% ungroup()
+  data <- data %>%
+    shrink(variable, grouping, how) %>%
+    dplyr::ungroup()
 
-  p <- ggplot(data, aes(x = get(x), y = get(y), fill = get(variable))) +
-    geom_tile() +
-    theme_bw() +
-    labs(x = x, y = y, fill = variable)
+  p <- ggplot2::ggplot(data, aes(x = get(x), y = get(y), fill = get(variable))) +
+    ggplot2::geom_tile() +
+    ggplot2::theme_bw() +
+    ggplot2::labs(x = x, y = y, fill = variable)
 
   return (p)
 
