@@ -82,7 +82,9 @@ facettize(
 ```
 
 
-Here, the arguments `rows` and `cols` specify the variables to use to facet by rows and columns, respectively. Setting `wrap` to TRUE makes the function call `ggplot`'s `facet_wrap` instead of `facet_grid`, so what variables are in rows or columns becomes irrelevant. A `prepend` and `append` arguments are provided, which allow you to specify optional prefixes or suffixes to your facet labels, for example variable names, equal signs or units. For each of these arguments, you can provide named or unnamed vectors of labels. If the labels are named, the names should refer to the variable to apply the label to. If unnamed, the vector of labels must either contain one label, which will be recycled over all variables, or as many labels as there are variables, and they will be assigned in the order defined by `rows` first, then `cols`. 
+Here, the arguments `rows` and `cols` specify the variables to use to facet by rows and columns, respectively. Setting `wrap` to TRUE makes the function call `ggplot`'s `facet_wrap` instead of `facet_grid`, so what variables are in rows or columns becomes irrelevant. 
+
+A `prepend` and `append` arguments are provided, which allow you to specify optional prefixes or suffixes to your facet labels, for example variable names, equal signs or units. For each of these arguments, you can provide named or unnamed vectors of labels. If the labels are named, the names should refer to the variable to apply the label to. If unnamed, the vector of labels must either contain one label, which will be recycled over all variables, or as many labels as there are variables, and they will be assigned in the order defined by `rows` first, then `cols`. 
 
 You can render mathematical expressions or greek letters in facet labels for a given variable. For this, write the `prepend` or `append` label as a `plotmath` expression for that variable, and add this variable's name to the `parsed` argument. This will parse the expression and render it as needed. For more information about the `plotmath` syntax for mathematical notations, see the appropriate documentation (e.g. `?bquote`).
 
@@ -92,7 +94,7 @@ Last, you can provide variable names to the `header` argument, and for these var
 
 We may also want to plot simulations through time, or against another continuous variable, resulting in many lines on the same plot. `gglineplot` takes this role, and can be combined with `facettize` to visualize the dynamics throughout parameter space.
 
-```{r, fig.height = 5, fig.width = 6}
+```{r, fig.height = 5, fig.width = 7}
 lns <- data %>%
   filter(hzg == 0.1, lambda_a == 2) %>%
   gglineplot(x = "time", y = "X", line = "simulation") + 
@@ -103,7 +105,11 @@ lns <- data %>%
 lns %>% facettize(rows = "a", cols = "b", header = c("a", "b"))
 ```
 
-Note however that line plots are more limited than heatmaps in showing overviews across high-dimensional parameter spaces. Here, we had to `filter` the data down to one specific value for parameters `hzg` and `lambda_a` to no overcrowd the figure with facets. You can make use of plot-combining utilities provided in packages such as `egg`, `ggpubr`, `grid`, `patchwork` or `cowplot` to assemble multiple facetted plots on the same figure (see next section for an example).
+This functions uses a trick to plot many lines on the same plot without without all lines having to look very different: they all have a slightly different transparency, but this is not noticeable. This means, however, that the `alpha` aesthetics is already mapped by a variable, which is defined in `line` (here `simulation`). You can change the base transparency with the `alpha` argument and the variation in transparency between lines with the `step` argument. 
+
+The `color` argument allows to set a given color to all the lines. In most cases, however, one may want to color the lines according to an aesthetics, e.g. the value of the variable itself. This can be done by mapping an extra aesthetics from outside the function, as we did in the chunk of code above, using `aes`.
+
+Note that line plots are more limited than heatmaps in showing overviews across high-dimensional parameter spaces. Here, we had to `filter` the data down to one specific value for parameters `hzg` and `lambda_a` to no overcrowd the figure with facets. You can make use of plot-combining utilities provided in packages such as `egg`, `ggpubr`, `grid`, `patchwork` or `cowplot` to assemble multiple facetted plots on the same figure (see next section for an example).
 
 # ggdensityplot
 
@@ -111,13 +117,24 @@ We may want to eyeball distributions across multiple categories, without knowing
 
 ```{r, warning = FALSE, message = FALSE}
 colors <-  colorRampPalette(c("goldenrod", "coral"))(nlevels(factor(data$a)))
+
 custom1 <- function(p) p + labs(x = "Response")
 custom2 <- function(p) p + labs(x = "Inflow rate", y = "Reponse")
-p1 <- ggdensityplot(data, "X", "a", colors = colors) %>% custom1()
-p2 <- ggdensityplot(data, "X", "a", "density", colors = colors) %>% custom1()
-p3 <- ggdensityplot(data, "X", "a", "boxplot", colors = colors) %>% custom2()
-p4 <- ggdensityplot(data, "X", "a", "violin", colors = colors) %>% custom2()
+
+p1 <- ggdensityplot(
+  data, variable = "X", grouping = "a", colors = colors
+) %>% custom1()
+p2 <- ggdensityplot(
+  data, variable = "X", grouping = "a", plot_type = "density", colors = colors
+) %>% custom1()
+p3 <- ggdensityplot(
+  data, variable = "X", grouping = "a", plot_type = "boxplot", colors = colors
+) %>% custom2()
+p4 <- ggdensityplot(
+  data, "X", grouping = "a", plot_type = "violin", colors = colors
+) %>% custom2()
+
 plot_grid(p1, p2, p3, p4, ncol = 2, nrow = 2, labels = c("A", "B", "C", "D"))
 ```
 
-This makes it easier for you to explore your data and pick the right visualization that suits your needs, without having to code a lot.
+This makes it easier for you to explore your data and pick the right visualization that suits your needs, without having to code a lot. `ggdensityplot` has a number of parameters to further fine-tune the aspects of the plots, e.g. the number of bins in histograms, whether to add jitter, or whether to color the different groups at all.
