@@ -8,6 +8,6 @@ You can install the package from R using:
 devtools::install_github("rscherrer/ggsim", build_vignettes = TRUE)
 ```
 
-where setting the `buikd_vignettes` argument to TRUE will allow you to view the vignette from R, using `browseVignettes("ggsim")` after installing the package.
+where setting the `build_vignettes` argument to TRUE will allow you to view the vignette from R, using `browseVignettes("ggsim")` after installing the package.
 
 Suggestions and contributions to further improve the package are welcome.
