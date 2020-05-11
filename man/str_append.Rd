@@ -7,11 +7,14 @@
 str_append(x, string, sep = "")
 }
 \arguments{
-\item{x}{A string}
+\item{x}{A character vector}
 
-\item{string}{A string to prepend}
+\item{string}{A character string to append}
 
 \item{sep}{Optional separator string}
+}
+\value{
+A character vector
 }
 \description{
 Append a string to another

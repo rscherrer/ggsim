@@ -30,48 +30,60 @@ ggdensityplot <- function(
   colors = NULL
 ) {
 
-  library(tidyverse)
-
   # Convert grouping variable to factor if needed
   if (!is.null(grouping)) data[, grouping] <- as.factor(data[, grouping])
 
   if (!is.null(colors) & color_groups & length(colors) != nlevels(data[, grouping])) stop("Please provide as many colors as there are groups")
 
+  # Choose a specific plotting function
   plot_types <- c("density", "histogram", "boxplot", "violin")
   if (!plot_type %in% plot_types) stop("Please specify a valid plot type")
   eval(parse(text = paste0("this_geom <- geom_", plot_type)))
 
-  p <- ggplot(data) + theme_bw()
+  # Set up a plot
+  p <- ggplot2::ggplot(data) + ggplot2::theme_bw() + ggplot2::xlab(variable)
 
   # One dimensional plot
-  if (is.null(grouping)) return (p + this_geom(aes(x = get(variable)), bins = bins) + xlab(variable))
-
-  p <- p + xlab(variable)
+  if (is.null(grouping)) {
+    p <- p + this_geom(ggplot2::aes(x = get(variable)), bins = bins)
+    return (p)
+  }
 
   # One dimensional plot with multiple layers
   if (plot_type %in% c("density", "histogram")) {
     grps <- levels(data[, grouping])
     if (is.null(colors)) colors <- rep("darkgrey", length(groups))
     layers <- data %>% split(f = data[, grouping])
-    layers <- map(
-      layers, ~ this_geom(
+    layers <- layers %>% purrr::map(
+      ~ this_geom(
         data = .x,
-        aes(x = get(variable), fill = .data[[grouping]][1]),
+        ggplot2::aes(x = get(variable), fill = .data[[grouping]][1]),
         alpha = alpha, bins = bins
       )
     )
     for (i in seq_along(layers)) p <- p + layers[i]
-    p <- p + scale_fill_manual(values = colors, limits = grps)
-    p <- p + labs(fill = grouping)
+    p <- p + ggplot2::scale_fill_manual(values = colors, limits = grps)
+    p <- p + ggplot2::labs(fill = grouping)
     return (p)
   }
 
   # Two dimensional plot
-  p <- p + this_geom(aes(x = get(grouping), y = get(variable))) + xlab(grouping) + ylab(variable)
-  if (jitter) p <- p + geom_jitter(aes(x = get(grouping), y = get(variable)), width = jitter_width)
+  p <- p +
+    this_geom(ggplot2::aes(x = get(grouping), y = get(variable))) +
+    ggplot2::xlab(grouping) +
+    ggplot2::ylab(variable)
+
+  if (jitter) {
+    p <- p +
+      ggplot2::geom_jitter(
+        ggplot2::aes(x = get(grouping), y = get(variable)), width = jitter_width
+      )
+  }
+
   if (!color_groups) return (p)
-  p <- p + aes(color = get(grouping)) + labs(color = grouping)
-  if (!is.null(colors)) p <- p + scale_color_manual(values = colors)
+
+  p <- p + ggplot2::aes(color = get(grouping)) + ggplot2::labs(color = grouping)
+  if (!is.null(colors)) p <- p + ggplot2::scale_color_manual(values = colors)
 
   return (p)
 
