@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
-data <- readRDS("vignette_data/simulations.rds")
+data <- readRDS("data/simulations.rds")
 head(data)
 
 ## ---- message = FALSE---------------------------------------------------------
