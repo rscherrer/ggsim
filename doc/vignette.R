@@ -49,11 +49,22 @@ lns %>% facettize(rows = "a", cols = "b", header = c("a", "b"))
 
 ## ---- warning = FALSE, message = FALSE----------------------------------------
 colors <-  colorRampPalette(c("goldenrod", "coral"))(nlevels(factor(data$a)))
+
 custom1 <- function(p) p + labs(x = "Response")
 custom2 <- function(p) p + labs(x = "Inflow rate", y = "Reponse")
-p1 <- ggdensityplot(data, "X", "a", colors = colors) %>% custom1()
-p2 <- ggdensityplot(data, "X", "a", "density", colors = colors) %>% custom1()
-p3 <- ggdensityplot(data, "X", "a", "boxplot", colors = colors) %>% custom2()
-p4 <- ggdensityplot(data, "X", "a", "violin", colors = colors) %>% custom2()
+
+p1 <- ggdensityplot(
+  data, variable = "X", grouping = "a", colors = colors
+) %>% custom1()
+p2 <- ggdensityplot(
+  data, variable = "X", grouping = "a", plot_type = "density", colors = colors
+) %>% custom1()
+p3 <- ggdensityplot(
+  data, variable = "X", grouping = "a", plot_type = "boxplot", colors = colors
+) %>% custom2()
+p4 <- ggdensityplot(
+  data, "X", grouping = "a", plot_type = "violin", colors = colors
+) %>% custom2()
+
 plot_grid(p1, p2, p3, p4, ncol = 2, nrow = 2, labels = c("A", "B", "C", "D"))
 
