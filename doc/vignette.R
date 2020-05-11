@@ -37,7 +37,7 @@ facettize(
   labs(x = "Inflow rate", y = "Outflow rate", fill = "Response") +
   ggtitle("Our facetted heatmap")
 
-## ---- fig.height = 5, fig.width = 6-------------------------------------------
+## ---- fig.height = 5, fig.width = 7-------------------------------------------
 lns <- data %>%
   filter(hzg == 0.1, lambda_a == 2) %>%
   gglineplot(x = "time", y = "X", line = "simulation") + 

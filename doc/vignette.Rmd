@@ -94,7 +94,7 @@ Last, you can provide variable names to the `header` argument, and for these var
 
 We may also want to plot simulations through time, or against another continuous variable, resulting in many lines on the same plot. `gglineplot` takes this role, and can be combined with `facettize` to visualize the dynamics throughout parameter space.
 
-```{r, fig.height = 5, fig.width = 6}
+```{r, fig.height = 5, fig.width = 7}
 lns <- data %>%
   filter(hzg == 0.1, lambda_a == 2) %>%
   gglineplot(x = "time", y = "X", line = "simulation") + 
