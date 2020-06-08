@@ -32,7 +32,7 @@ Let us load the packages we need:
 #devtools::install_github("rscherrer/ggsim") # if the package is not already installed
 library(tidyverse)
 library(ggsim)
-library(cowplot) # to assemble multiple plots in the same figure
+library(patchwork) # to assemble multiple plots in the same figure
 ```
 
 # Disclaimer
@@ -46,7 +46,9 @@ Often in simulation studies we want an overview of the model behavior across par
 The function `ggheatmap` does exactly that, performing subsequent summary steps before plotting:
 
 ```{r, fig.width = 4, fig.height = 3}
-hmp <- ggheatmap(data, "X", x = "a", y = "b", reduce = "simulation", how = c(last, mean)) +
+hmp <- ggheatmap(
+  data, "X", x = "a", y = "b", reduce = "simulation", how = c(last, mean)
+) +
   scale_fill_continuous(type = "viridis") +
   labs(x = "Inflow rate", y = "Outflow rate", fill = "Response") +
   ggtitle("Our first heatmap")
@@ -115,26 +117,27 @@ Note that line plots are more limited than heatmaps in showing overviews across 
 
 We may want to eyeball distributions across multiple categories, without knowing exactly which kind of visualization we want (density, histogram, boxplot..?). Then, `ggdensityplot` is our friend:
 
-```{r, warning = FALSE, message = FALSE}
-colors <-  colorRampPalette(c("goldenrod", "coral"))(nlevels(factor(data$a)))
+```{r, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5}
 
-custom1 <- function(p) p + labs(x = "Response")
-custom2 <- function(p) p + labs(x = "Inflow rate", y = "Reponse")
+data$a <- factor(data$a)
 
 p1 <- ggdensityplot(
-  data, variable = "X", grouping = "a", colors = colors
-) %>% custom1()
+  data, "X", plot_type = "histogram", mapping = list(fill = "a"), alpha = 0.5
+)
 p2 <- ggdensityplot(
-  data, variable = "X", grouping = "a", plot_type = "density", colors = colors
-) %>% custom1()
+  data, "X", plot_type = "density", mapping = list(fill = "a"), alpha = 0.5
+)
 p3 <- ggdensityplot(
-  data, variable = "X", grouping = "a", plot_type = "boxplot", colors = colors
-) %>% custom2()
+  data, "X", plot_type = "boxplot", x = "a", mapping = list(fill = "a"), 
+  alpha = 0.5
+)
 p4 <- ggdensityplot(
-  data, "X", grouping = "a", plot_type = "violin", colors = colors
-) %>% custom2()
+  data, "X", plot_type = "violin", x = "a", mapping = list(fill = "a"), 
+  alpha = 0.5
+)
 
-plot_grid(p1, p2, p3, p4, ncol = 2, nrow = 2, labels = c("A", "B", "C", "D"))
+(p1 | p2) / (p3 | p4) # using patchwork
+
 ```
 
 This makes it easier for you to explore your data and pick the right visualization that suits your needs, without having to code a lot. `ggdensityplot` has a number of parameters to further fine-tune the aspects of the plots, e.g. the number of bins in histograms, whether to add jitter, or whether to color the different groups at all.

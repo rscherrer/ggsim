@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for plotting simulation data using ggplot2
 Version: 0.1.0
 Author: Raphael Scherrer
-Maintainer: The package maintainer <r.scherrer@rug.nl>
+Maintainer: Raphael Scherrer <r.scherrer@rug.nl>
 Description: Wraps around ggplot2 functions to produce plots without typing as much code. Tailored for simulation data.
 License: GPL-3
 Encoding: UTF-8
@@ -19,5 +19,7 @@ Imports:
     magrittr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    cowplot,
+    patchwork
 VignetteBuilder: knitr

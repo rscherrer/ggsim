@@ -34,14 +34,16 @@ gglineplot <- function(
   data <- data %>% dplyr::mutate_at(line, as.factor)
   nlines <- nlevels(data[[line]])
 
-  if (is.null(color)) color <- "black"
-
   p <- ggplot2::ggplot(
     data,
     ggplot2::aes(x = get(x), y = get(y), alpha = get(line))
-  ) +
-    ggplot::geom_line(color = color) +
-    ggplot2::theme_bw() +
+  )
+  if (is.null(color)) {
+    p <- p + ggplot2::geom_line()
+  } else {
+    p <- p + ggplot2::geom_line(color = color)
+  }
+  p <- p + ggplot2::theme_bw() +
     ggplot2::labs(x = x, y = y) +
     ggplot2::guides(alpha = FALSE) +
     ggplot2::scale_alpha_manual(
