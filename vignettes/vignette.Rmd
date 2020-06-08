@@ -12,11 +12,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r, include = FALSE}
-# To build the vignette in HTML, run devtools::build_vignettes()
-# 
-```
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
