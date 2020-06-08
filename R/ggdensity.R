@@ -14,7 +14,9 @@
 #' ggdensity(mtcars, "mpg")
 #' ggdensity(mtcars, "mpg", mapping = list(fill = "vs"), alpha = 0.5)
 #'
-#' @return
+#' @return A ggplot
+#'
+#' @export
 
 ggdensity <- function(data, variable, mapping = NULL, ...) {
 

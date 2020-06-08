@@ -23,13 +23,13 @@ ggdensityplot <- function(
 ) {
 
   if (plot_type == "histogram") {
-    gghistogram(data, variable, mapping = mapping, ...)
+    gghistogram(data, variable, ...)
   } else if (plot_type == "density") {
-    ggdensity(data, variable, mapping = mapping, ...)
+    ggdensity(data, variable, ...)
   } else if (plot_type == "boxplot") {
-    ggboxplot(data, variable, mapping = mapping, ...)
+    ggboxplot(data, variable, ...)
   } else if (plot_type == "violin") {
-    ggviolin(data, variable, mapping = mapping, ...)
+    ggviolin(data, variable, ...)
   } else {
     stop("Wrong plot_type")
   }

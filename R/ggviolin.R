@@ -17,7 +17,9 @@
 #' ggviolin(mtcars, "mpg", is_jitter = TRUE, jitter_pars = list(width = 0.2))
 #' ggviolin(mtcars, "mpg", mapping = list(fill = "vs"), alpha = 0.5)
 #'
-#' @return
+#' @return A ggplot
+#'
+#' @export
 
 ggviolin <- function(
   data,

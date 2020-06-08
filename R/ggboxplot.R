@@ -17,7 +17,9 @@
 #' ggboxplot(mtcars, "mpg", is_jitter = TRUE, jitter_pars = list(width = 0.2))
 #' ggboxplot(mtcars, "mpg", mapping = list(fill = "vs"), alpha = 0.5)
 #'
-#' @return
+#' @return A ggplot
+#'
+#' @export
 
 ggboxplot <- function(
   data,

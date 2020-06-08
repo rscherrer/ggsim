@@ -19,5 +19,7 @@ Imports:
     magrittr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    cowplot,
+    patchwork
 VignetteBuilder: knitr

@@ -12,10 +12,12 @@ head(data)
 #devtools::install_github("rscherrer/ggsim") # if the package is not already installed
 library(tidyverse)
 library(ggsim)
-library(cowplot) # to assemble multiple plots in the same figure
+library(patchwork) # to assemble multiple plots in the same figure
 
 ## ---- fig.width = 4, fig.height = 3-------------------------------------------
-hmp <- ggheatmap(data, "X", x = "a", y = "b", reduce = "simulation", how = c(last, mean)) +
+hmp <- ggheatmap(
+  data, "X", x = "a", y = "b", reduce = "simulation", how = c(last, mean)
+) +
   scale_fill_continuous(type = "viridis") +
   labs(x = "Inflow rate", y = "Outflow rate", fill = "Response") +
   ggtitle("Our first heatmap")
@@ -47,24 +49,25 @@ lns <- data %>%
   labs(x = "Time (generations)", y = "Response", color = "Response")
 lns %>% facettize(rows = "a", cols = "b", header = c("a", "b"))
 
-## ---- warning = FALSE, message = FALSE----------------------------------------
-colors <-  colorRampPalette(c("goldenrod", "coral"))(nlevels(factor(data$a)))
+## ---- warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5---------
 
-custom1 <- function(p) p + labs(x = "Response")
-custom2 <- function(p) p + labs(x = "Inflow rate", y = "Reponse")
+data$a <- factor(data$a)
 
 p1 <- ggdensityplot(
-  data, variable = "X", grouping = "a", colors = colors
-) %>% custom1()
+  data, "X", plot_type = "histogram", mapping = list(fill = "a"), alpha = 0.5
+)
 p2 <- ggdensityplot(
-  data, variable = "X", grouping = "a", plot_type = "density", colors = colors
-) %>% custom1()
+  data, "X", plot_type = "density", mapping = list(fill = "a"), alpha = 0.5
+)
 p3 <- ggdensityplot(
-  data, variable = "X", grouping = "a", plot_type = "boxplot", colors = colors
-) %>% custom2()
+  data, "X", plot_type = "boxplot", x = "a", mapping = list(fill = "a"), 
+  alpha = 0.5
+)
 p4 <- ggdensityplot(
-  data, "X", grouping = "a", plot_type = "violin", colors = colors
-) %>% custom2()
+  data, "X", plot_type = "violin", x = "a", mapping = list(fill = "a"), 
+  alpha = 0.5
+)
 
-plot_grid(p1, p2, p3, p4, ncol = 2, nrow = 2, labels = c("A", "B", "C", "D"))
+(p1 | p2) / (p3 | p4) # using patchwork
+
 

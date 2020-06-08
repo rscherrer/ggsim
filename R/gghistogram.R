@@ -14,7 +14,9 @@
 #' gghistogram(mtcars, "mpg")
 #' gghistogram(mtcars, "mpg", mapping = list(fill = "vs"), alpha = 0.5)
 #'
-#' @return
+#' @return A ggplot
+#'
+#' @export
 
 gghistogram <- function(
   data,

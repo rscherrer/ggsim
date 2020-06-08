@@ -33,7 +33,7 @@ additional mappings}
 \value{
 A ggplot
 
-
+A ggplot
 }
 \description{
 Plot a violin plot
