@@ -2,45 +2,29 @@
 % Please edit documentation in R/ggdensityplot.R
 \name{ggdensityplot}
 \alias{ggdensityplot}
-\title{Flexible density plots}
+\title{Plot a density}
 \usage{
-ggdensityplot(
-  data,
-  variable,
-  grouping = NULL,
-  plot_type = "histogram",
-  bins = 30,
-  jitter = FALSE,
-  jitter_width = 0.2,
-  color_groups = TRUE,
-  alpha = 0.5,
-  colors = NULL
-)
+ggdensityplot(data, variable, plot_type = "histogram", ...)
 }
 \arguments{
 \item{data}{A data frame}
 
-\item{variable}{What variable to plot the density of}
+\item{variable}{Name of the variable to plot}
 
-\item{grouping}{Optional grouping variable}
+\item{plot_type}{One of "histogram", "density", "boxplot" or "violin"}
 
-\item{plot_type}{Either of "density", "histogram", "boxplot" or "violin"}
-
-\item{bins}{Number of bins in case of histogram}
-
-\item{jitter}{Whether to add jitter in case of boxplot or violin}
-
-\item{jitter_width}{Width of the jitter}
-
-\item{color_groups}{Whether to color by group}
-
-\item{alpha}{Transparency}
-
-\item{colors}{Optional set of colors for the different groups}
+\item{...}{Extra parameters to be passed to either one of \code{gghistogram},
+\code{ggdensity}, \code{ggboxplot} or \code{ggviolin}}
 }
 \value{
 A ggplot
 }
 \description{
-A flexible function to explore different ways of plotting densities from a data frame
+Plot a density
+}
+\examples{
+
+ggdensityplot(mtcars, "mpg", mapping = list(fill = "vs"), alpha = 0.5)
+ggdensityplot(mtcars, "mpg", x = "cyl", plot_type = "boxplot")
+
 }
