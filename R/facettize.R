@@ -43,7 +43,7 @@ facettize <- function(
   }
 
   # Set labeller function
-  labeller <- label_value
+  labeller <- ggplot2::label_value
 
   surround <- rep('', length(facets))
 
@@ -51,7 +51,7 @@ facettize <- function(
   if (!is.null(parsed)) {
 
     # Update labeller function
-    labeller <- label_parsed
+    labeller <- ggplot2::label_parsed
 
     # Protect unparsed labels from parsing
     names(surround) <- facets
@@ -63,7 +63,10 @@ facettize <- function(
   # Modify the labels of the facetting variables in the dataset
   for (i in seq_along(facets)) {
     p$data <- p$data %>%
-      mutate_at(facets[i], ~ fct_facetlabel(., prepend[i], append[i], surround[i]))
+      dplyr::mutate_at(
+        facets[i],
+        ~ fct_facetlabel(., prepend[i], append[i], surround[i])
+      )
   }
 
   # Setup rows and columns
@@ -72,7 +75,11 @@ facettize <- function(
   formula <- formula(paste(lhs, "~", rhs))
 
   # Choose what type of facetting to use
-  if (wrap) thisfacet <- ggplot2::facet_wrap else thisfacet <- ggplot2::facet_grid
+  if (wrap) {
+    thisfacet <- ggplot2::facet_wrap
+  } else {
+    thisfacet <- ggplot2::facet_grid
+  }
 
   # Split the plot into facets
   p + thisfacet(formula, labeller = labeller)
