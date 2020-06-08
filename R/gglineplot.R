@@ -40,7 +40,7 @@ gglineplot <- function(
     data,
     ggplot2::aes(x = get(x), y = get(y), alpha = get(line))
   ) +
-    ggplot::geom_line(color = color) +
+    ggplot2::geom_line(color = color) +
     ggplot2::theme_bw() +
     ggplot2::labs(x = x, y = y) +
     ggplot2::guides(alpha = FALSE) +
