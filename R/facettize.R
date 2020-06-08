@@ -43,7 +43,7 @@ facettize <- function(
   }
 
   # Set labeller function
-  labeller <- label_value
+  labeller <- ggplot2::label_value
 
   surround <- rep('', length(facets))
 
