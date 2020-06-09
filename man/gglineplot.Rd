@@ -17,7 +17,7 @@ gglineplot(data, x, y, line = NULL, alpha = 0.5, step = 0.1, color = NULL)
 
 \item{step}{Range of the noise in transparency across lines. Giving the lines different transparency values allows to plot many lines together on the same plot. Keep this parameter small to make the differences in transparency unnoticeable.}
 
-\item{color}{Color of the lines. Leave unspecified if you want to assign color as an aesthetics (do that outside the function).}
+\item{...}{Parameters for \code{ggplot2::geom_path}}
 }
 \value{
 A ggplot

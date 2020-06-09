@@ -52,8 +52,8 @@ ggviolin <- function(
     p <- p + do.call("this_jitter", jitter_pars)
   }
   if (xnull) p <- p +
-    theme(axis.text.x = element_blank()) +
-    xlab(NULL)
+    ggplot2::theme(axis.text.x = ggplot2::element_blank()) +
+    ggplot2::xlab(NULL)
 
   return(p)
 

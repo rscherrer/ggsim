@@ -7,7 +7,7 @@
 #' @param line Variable to group data points into separate lines. If NULL (defaults), a single line is drawn per facet.
 #' @param alpha Baseline transparency of the lines.
 #' @param step Range of the noise in transparency across lines. Giving the lines different transparency values allows to plot many lines together on the same plot. Keep this parameter small to make the differences in transparency unnoticeable.
-#' @param color Color of the lines. Leave unspecified if you want to assign color as an aesthetics (do that outside the function).
+#' @param ... Parameters for `ggplot2::geom_path`
 #'
 #' @return A ggplot
 #'
@@ -38,11 +38,7 @@ gglineplot <- function(
     data,
     ggplot2::aes(x = get(x), y = get(y), alpha = get(line))
   )
-  if (is.null(color)) {
-    p <- p + ggplot2::geom_line()
-  } else {
-    p <- p + ggplot2::geom_line(color = color)
-  }
+  p <- p + ggplot2::geom_path(...)
   p <- p + ggplot2::theme_bw() +
     ggplot2::labs(x = x, y = y) +
     ggplot2::guides(alpha = FALSE) +
