@@ -4,7 +4,7 @@
 \alias{gglineplot}
 \title{Plot multiple lines}
 \usage{
-gglineplot(data, x, y, line = NULL, alpha = 0.5, step = 0.1, color = NULL)
+gglineplot(data, x, y, line = NULL, alpha = 0.5, step = 0.1, color = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame}
@@ -24,4 +24,9 @@ A ggplot
 }
 \description{
 Flexible way to plot multiple lines from a data frame
+}
+\examples{
+
+gglineplot(mtcars, "mpg", "cyl")
+
 }

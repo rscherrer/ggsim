@@ -11,6 +11,10 @@
 #'
 #' @return A ggplot
 #'
+#' @examples
+#'
+#' gglineplot(mtcars, "mpg", "cyl")
+#'
 #' @export
 
 gglineplot <- function(
@@ -20,7 +24,8 @@ gglineplot <- function(
   line = NULL,
   alpha = 0.5,
   step = 0.1,
-  color = NULL
+  color = NULL,
+  ...
 ) {
 
   alphamin <- ifelse(alpha - step < 0, 0, alpha - step)
